@@ -17,17 +17,28 @@ def get_pacific_time():
     pacific = pytz.timezone('US/Pacific')
     pacific_time = current_time.astimezone(pacific)
     return pacific_time
+
+def censor_middle(text):
+    # Calculate the length of the portion to be censored
+    censor_length = int(len(text) / 1.4)
+
+    # Calculate starting and ending indices for the censor
+    start = (len(text) - censor_length) // 2
+    end = start + censor_length
+
+    # Replace the middle portion with asterisks
+    return text[:start] + '*' * censor_length + text[end:]
     
 def api_key_config(api_key):
     if api_key is not None and api_key.startswith('AIza'):
         # PaLM2 keys start with AIza
-        print(f'Set PaLM2 API: {api_key}')
+        print(f'Set PaLM2 API: {censor_middle(api_key)}')
         palm.configure(api_key=api_key.strip())
         return
     
     # set up key from command
     if api_key is not None:
-        print(f'Set OpenAI API: {api_key}')
+        print(f'Set OpenAI API: {censor_middle(api_key)}')
         openai.api_key = api_key.strip()
         return
     
