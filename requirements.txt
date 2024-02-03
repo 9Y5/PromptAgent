@@ -3,6 +3,6 @@ fire
 numpy
 scipy
 datasets
-openai
+openai==0.28
 pytz
 matplotlib
